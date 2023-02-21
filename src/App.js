@@ -13,13 +13,13 @@ function App() {
 
   const renderUsertext = () =>{
     const chatInput = document.getElementById('chat-content')
-    chatInput.innerHTML += `<div class="chat-content__user"><img src="cheems.jpg"/>${userText}</div>`
+    chatInput.innerHTML += `<div class="chat-content__user"><img src="user.png"/>${userText}</div>`
     setUserText('')
-    chatInput.innerHTML += `<div class="chat-content__ai"><img src="user.png"/> </div>`
+    chatInput.innerHTML += `<div class="chat-content__ai"><img src="cheems.jpg"/> </div>`
     const lastChatAI = document.querySelectorAll('.chat-content__ai')[document.querySelectorAll('.chat-content__ai').length - 1]
     chatInput.scrollTop = chatInput.scrollHeight;
     let count = 0
-    let random = getRndInteger(5,10)
+    let random = getRndInteger(5,20)
     const animation = setTimeout(()=>{
       const animation1 = setInterval(()=>{
         count += 1
@@ -32,6 +32,11 @@ function App() {
     },2000
     )
   }
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      if(event.target.value !== '')  renderUsertext()
+    }
+  };
   return (
     <div className="App">
       <div className="container">
@@ -43,7 +48,7 @@ function App() {
         <div className="chat-input" id="chat-input">
           <input type="text" placeholder="Text here..." value={userText} onChange={(e)=>{
             setUserText(e.target.value)
-          }}/>
+          }} onKeyDown={(e)=>handleKeyDown(e)}/>
           <button onClick={()=>renderUsertext()}>
             <svg
               data-v-24e50695=""
